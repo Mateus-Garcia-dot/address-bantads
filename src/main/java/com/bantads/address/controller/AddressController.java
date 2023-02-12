@@ -18,12 +18,11 @@ public class AddressController {
     @GetMapping
     public ResponseEntity<List<AddressModel>> getAllAddresses() {
         List<AddressModel> addressModelList = this.addressRepository.findAll();
-        addressModelList.sort((a, b) -> a.getId().compareTo(b.getId()));
         return ResponseEntity.ok(addressModelList);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AddressModel> getAddressById(@PathVariable Long id) {
+    public ResponseEntity<AddressModel> getAddressById(@PathVariable String id) {
         AddressModel addressModel = this.addressRepository.findById(id).orElseThrow();
         return ResponseEntity.ok(addressModel);
     }
@@ -35,7 +34,7 @@ public class AddressController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AddressModel> updateAddress(@PathVariable Long id, @RequestBody AddressModel addressModel) {
+    public ResponseEntity<AddressModel> updateAddress(@PathVariable String id, @RequestBody AddressModel addressModel) {
         AddressModel address = this.addressRepository.findById(id).orElseThrow();
         address.setType(addressModel.getType());
         address.setStreet(addressModel.getStreet());
@@ -48,7 +47,7 @@ public class AddressController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteAddress(@PathVariable Long id) {
+    public ResponseEntity<String> deleteAddress(@PathVariable String id) {
         this.addressRepository.deleteById(id);
         return ResponseEntity.ok("Deleted");
     }

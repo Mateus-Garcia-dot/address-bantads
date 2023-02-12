@@ -21,7 +21,7 @@ public class AddressConsumer {
     }
 
     @RabbitListener(queues = "address.update")
-    public void updateAddress(@PathVariable Long id, @RequestBody AddressModel addressModel) {
+    public void updateAddress(@PathVariable String id, @RequestBody AddressModel addressModel) {
         AddressModel address = this.addressRepository.findById(id).orElse(null);
         if (address == null) {
             return;
@@ -36,7 +36,7 @@ public class AddressConsumer {
     }
 
     @RabbitListener(queues = "address.delete")
-    public void deleteAddress(@PathVariable Long id) {
+    public void deleteAddress(@PathVariable String id) {
         this.addressRepository.deleteById(id);
     }
 

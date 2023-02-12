@@ -13,11 +13,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class AddressModel {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    private String uuid = java.util.UUID.randomUUID().toString();
     private String type;
     private String street;
     private Integer number;
