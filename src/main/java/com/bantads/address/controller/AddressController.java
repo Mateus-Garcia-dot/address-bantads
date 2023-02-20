@@ -52,4 +52,28 @@ public class AddressController {
         return ResponseEntity.ok("Deleted");
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<AddressModel> patchAddress(@PathVariable String id, @RequestBody AddressModel addressModel) {
+        AddressModel address = this.addressRepository.findById(id).orElseThrow();
+        if (addressModel.getUuid() != null) {
+            return ResponseEntity.notFound().build();
+        }
+        if (addressModel.getType() != null) {
+            address.setType(addressModel.getType());
+        }
+        if (addressModel.getStreet() != null) {
+            address.setStreet(addressModel.getStreet());
+        }
+        if (addressModel.getNumber() != null) {
+            address.setNumber(addressModel.getNumber());
+        }
+        if (addressModel.getCity() != null) {
+            address.setCity(addressModel.getCity());
+        }
+        if (addressModel.getComplement() != null) {
+            address.setComplement(addressModel.getComplement());
+        }
+        return ResponseEntity.ok(this.addressRepository.save(address));
+    }
+
 }

@@ -7,8 +7,6 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Data
 @Component
 public class AddressConsumer {
@@ -38,6 +36,35 @@ public class AddressConsumer {
     @RabbitListener(queues = "address.delete")
     public void deleteAddress(@PathVariable String id) {
         this.addressRepository.deleteById(id);
+    }
+
+    @RabbitListener(queues = "address.patch")
+    public void patchAddress(AddressModel addressModel) {
+        AddressModel address = this.addressRepository.findById(addressModel.getUuid()).orElse(null);
+        if (address == null) {
+            return;
+        }
+        if (addressModel.getType() != null) {
+            address.setType(addressModel.getType());
+        }
+        if (addressModel.getStreet() != null) {
+            address.setStreet(addressModel.getStreet());
+        }
+        if (addressModel.getNumber() != null) {
+            address.setNumber(addressModel.getNumber());
+        }
+        if (addressModel.getCity() != null) {
+            address.setCity(addressModel.getCity());
+        }
+        if (addressModel.getComplement() != null) {
+            address.setComplement(addressModel.getComplement());
+        }
+        if (addressModel.getCep() != null) {
+            address.setCep(addressModel.getCep());
+        }
+        if (addressModel.getState() != null) {
+            address.setState(addressModel.getState());
+        }
     }
 
 }
