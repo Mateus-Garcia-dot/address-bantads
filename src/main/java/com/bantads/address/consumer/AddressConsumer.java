@@ -65,6 +65,7 @@ public class AddressConsumer {
         if (addressModel.getState() != null) {
             address.setState(addressModel.getState());
         }
+        this.addressRepository.save(address);
     }
 
 }
