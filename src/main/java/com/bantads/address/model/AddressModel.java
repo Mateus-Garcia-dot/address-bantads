@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class AddressModel {
     @Id
     private String uuid = java.util.UUID.randomUUID().toString();
+    private String customer;
     private String type;
     private String street;
     private Integer number;

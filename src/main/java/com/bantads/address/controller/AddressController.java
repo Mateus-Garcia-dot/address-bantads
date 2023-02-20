@@ -54,7 +54,10 @@ public class AddressController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<AddressModel> patchAddress(@PathVariable String id, @RequestBody AddressModel addressModel) {
-        AddressModel address = this.addressRepository.findById(id).orElseThrow();
+        AddressModel address = this.addressRepository.findByCustomer(id);
+        if (address == null) {
+            return ResponseEntity.notFound().build();
+        }
         if (addressModel.getUuid() != null) {
             return ResponseEntity.notFound().build();
         }

@@ -40,7 +40,7 @@ public class AddressConsumer {
 
     @RabbitListener(queues = "address.patch")
     public void patchAddress(AddressModel addressModel) {
-        AddressModel address = this.addressRepository.findById(addressModel.getUuid()).orElse(null);
+        AddressModel address = this.addressRepository.findByCustomer(addressModel.getCustomer());
         if (address == null) {
             return;
         }
